@@ -21,6 +21,7 @@ public class RunSwerveJoystick extends CommandBase {
 
     @Override
     public void execute() {
+        // Attempts to drive the swerve drive
         try {
             mChassis.runSwerve(mController.getRawAxis(1),
                     -mController.getRawAxis(0),

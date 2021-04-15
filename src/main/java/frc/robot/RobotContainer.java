@@ -7,8 +7,10 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.Chassis;
 
 public class RobotContainer {
-
+    // Initializes the chassis subsystem
     public static final Chassis mChassis = new Chassis();
+    
+    // Creates the controller
     public static final XboxController mController = new XboxController(0);
 
 
@@ -17,18 +19,20 @@ public class RobotContainer {
 
 
     public RobotContainer() {
+        // Calls the configureButtonBindings() function (see below)
         configureButtonBindings();
 
-
+        // Sets the default command of the chassis so it will automtically drive
         mChassis.setDefaultCommand(new RunFieldCentricSwerve(mChassis));
 
     }
 
-    JoystickButton mBbutton = new JoystickButton(mController, XboxController.Button.kB.value);
-
     private void configureButtonBindings() {
+        // Makes it so that when you press the B button the gyro will reset
         new JoystickButton(mController, XboxController.Button.kB.value)
                 .whenPressed(new ResetGyro(mChassis));
+
+        // Makes it so that when you press the A button it will call the ZeroAxes() function
         new JoystickButton(mController, XboxController.Button.kA.value)
                 .whileHeld(new ZeroAxes(mChassis));
 

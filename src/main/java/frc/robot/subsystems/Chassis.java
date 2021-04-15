@@ -16,36 +16,41 @@ import static java.lang.Double.max;
 
 public class Chassis extends SubsystemBase {
     
-
+    // Initializes the motor variables for actually driving
     WPI_TalonFX drive0 = new WPI_TalonFX(3);
     WPI_TalonFX drive1 = new WPI_TalonFX(2);
     WPI_TalonFX drive2 = new WPI_TalonFX(7);
     WPI_TalonFX drive3 = new WPI_TalonFX(0);
 
+    // Initializes the motor variables for changing the axis
     WPI_TalonFX axis0 = new WPI_TalonFX(4);
     WPI_TalonFX axis1 = new WPI_TalonFX(6);
     WPI_TalonFX axis2 = new WPI_TalonFX(1);
     WPI_TalonFX axis3 = new WPI_TalonFX(5);
 
+    // Initializes the CANcoders
     CANCoder coder0 = new CANCoder(12); // FL
     CANCoder coder1 = new CANCoder(10); // BL
     CANCoder coder2 = new CANCoder(11); // FR
     CANCoder coder3 = new CANCoder(13); // BR
 
-
+    // Initializes a default object to contain all of these motors and cancoders
     public SwerveCombo comboFL;
     public SwerveCombo comboBL;
     public SwerveCombo comboFR;
     public SwerveCombo comboBR;
 
+    // Initializes the gyro
     public static AHRS ahrs;
 
 
 
     public Chassis() {
+        // Sets the port for the gyro and calibrates it
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.calibrate();
 
+        // Sets the SwerveCombo()'s
         comboFL = new SwerveCombo(axis0, drive0, coder0, 0);
         comboBL = new SwerveCombo(axis1, drive1, coder1, 1);
         comboFR = new SwerveCombo(axis2, drive2, coder2, 2);
@@ -55,13 +60,14 @@ public class Chassis extends SubsystemBase {
 
 
     public void resetHeading() {
+        // Resets the gyro
         ahrs.reset();
     }
     
 
-
+    // Runs the swerve drive
     public void runSwerve(double fwd, double str, double rot) throws Exception {
-
+        
         new SwerveCalcs(fwd, str, rot);
 
         double ratio = 1.0;

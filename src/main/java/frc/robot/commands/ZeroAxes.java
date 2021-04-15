@@ -14,6 +14,7 @@ public class ZeroAxes extends CommandBase {
 
     @Override
     public void initialize() {
+        // Resets the axis
         cChassis.comboFL.zero();
         cChassis.comboBL.zero();
         cChassis.comboFR.zero();
